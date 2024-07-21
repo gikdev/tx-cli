@@ -15,6 +15,8 @@ function newComponentFile(config: Config): [string, boolean] {
 	const fileName = `${to_snake_case(config.name)}${config.useSuffix ? ".component" : ""}.${config.useTypescript ? "tsx" : "jsx"}`
 	const filePath = path.join(CURRENT_DIR, "src", "components", fileName)
 	const contents = getComponentTemplate({ componentName: config.name })
+	const exportFilePath = path.join(CURRENT_DIR, "src", "components", `index.${config.useTypescript ? "ts" : "js"}`)
+	const exportStatement = `export { default as ${config.name} } from "./${to_snake_case(config.name)}${config.useSuffix ? ".component" : ""}"\n`
 	const fileExists = fs.existsSync(filePath)
 
 	if (fileExists) return [`The file ${filePath} already exists`, false]
@@ -22,8 +24,11 @@ function newComponentFile(config: Config): [string, boolean] {
 	fs.writeFile(filePath, contents, err => {
 		if (err) throw err
 	})
+	fs.appendFile(exportFilePath, exportStatement, err => {
+		if (err) throw err
+	})
 
-	return [`Component <${config.name} /> got created!`, true]
+	return [`Component <${config.name} /> got created! And added to the index file!`, true]
 }
 
 export { newComponentFile }
