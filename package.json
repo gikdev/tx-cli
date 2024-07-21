@@ -1,8 +1,10 @@
 {
-	"name": "tx",
-	"version": "v0.1.1-beta",
+	"name": "@gikdev/tx",
+	"version": "0.1.1-beta",
 	"license": "MIT",
-	"bin": "dist/cli.js",
+	"bin": {
+		"tx": "dist/cli.js"
+	},
 	"type": "module",
 	"description": "Helps you do tasks in tmplx projects...",
 	"engines": {
@@ -12,7 +14,9 @@
 		"build": "tsc",
 		"dev": "tsc --watch"
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"dependencies": {
 		"ink": "^4.1.0",
 		"pastel": "^2.0.0",
@@ -35,7 +39,9 @@
 			"ts": "module",
 			"tsx": "module"
 		},
-		"nodeArguments": ["--loader=ts-node/esm"]
+		"nodeArguments": [
+			"--loader=ts-node/esm"
+		]
 	},
 	"xo": {
 		"extends": "xo-react",
@@ -44,5 +50,18 @@
 			"react/prop-types": "off"
 		}
 	},
-	"prettier": "@vdemedes/prettier-config"
+	"prettier": "@vdemedes/prettier-config",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gikdev/tx-cli.git"
+	},
+	"keywords": [
+		"cli"
+	],
+	"author": "gikdev",
+	"bugs": {
+		"url": "https://github.com/gikdev/tx-cli/issues"
+	},
+	"homepage": "https://github.com/gikdev/tx-cli#readme"
 }
