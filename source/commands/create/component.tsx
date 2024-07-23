@@ -1,7 +1,7 @@
 import { Text } from "ink"
 import React, { useEffect, useState } from "react"
 import zod from "zod"
-import { newComponentFile } from "../../helpers/index.js"
+import { ComponentService } from "../../services/index.js"
 
 export const alias = "c"
 export const args = zod.array(zod.string())
@@ -22,14 +22,15 @@ function Component({ args, options }: Props) {
 	const [msg, setMsg] = useState("Working on it...")
 	const [succeeded, setSucceeded] = useState<boolean | null>(null)
 	const colorToSet = succeeded ? "green" : succeeded === false ? "red" : "gray"
+	const compService = new ComponentService({
+		enableSuffix: options.suffix,
+		enableTypescript: options.ts,
+	})
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		const [newMsg, newSucceeded] = newComponentFile({
-			name: args[0] ?? "NewComponent",
-			useSuffix: options.suffix,
-			useTypescript: options.ts,
-		})
+		const finalComponentName = args[0] ?? "NewComponent"
+		const [newMsg, newSucceeded] = compService.create(finalComponentName)
 
 		setMsg(newMsg)
 		setSucceeded(newSucceeded)
