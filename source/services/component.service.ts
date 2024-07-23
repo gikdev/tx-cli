@@ -48,9 +48,9 @@ class ComponentService {
 		)
 
 		// make the export statement
-		const exportStatementPath =
-			to_snake_case(name) + this._config.enableSuffix ? ".component" : ""
-		const exportStatement = `export { default as ${name} } from "./${exportStatementPath}"`
+		const suffix = this._config.enableSuffix ? ".component" : ""
+		const exportStatement = `export { default as ${name} } from "./${to_snake_case(name)}${suffix}"
+`
 
 		// checking time! 🛡
 		const doesFileExist = fs.existsSync(filePath)
@@ -77,8 +77,7 @@ class ComponentService {
   return <>COMPONENT_NAME</>
 }
 
-export default COMPONENT_NAME
-`
+export default COMPONENT_NAME\n`
 		return rawTemplate.replaceAll("COMPONENT_NAME", componentName)
 	}
 }
